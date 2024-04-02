@@ -1,0 +1,12 @@
+{
+	"EOA": {
+		"erc20": {
+			"hash": "0xc78105fbab4cde6a6f7eff977d18312ff6030e84be390000dd959f1aa88be40c",
+			"gasUsed": "34460"
+		},
+		"eth": {
+			"hash": "0x3e4955bd9bc670f7ca7151bcb53d143b4c04500ed6e585c021e12b258bc8e116",
+			"gasUsed": "21000"
+		}
+	}
+}

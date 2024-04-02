@@ -16,6 +16,14 @@ We use a series of tests, each representing a unique combination of ERC4337 smar
 
 ## Findings
 
+### Regular EOA
+Regular EOA sending transaction and paying for gas.
+| Operation      | Gas Used |
+| --------------------- | -------- |
+| ETH transfer | 21,000   |
+| ERC20 transfer | 34,460 |
+
+### Smart Account
 | Signer | Smart Account | Infrastructure | Operation | Gas Cost |
 |--------|---------------|----------------|-----------|----------|
 |        |               |                |           |          |

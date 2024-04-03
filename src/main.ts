@@ -2,17 +2,16 @@ import type { Account } from "./accounts/Account";
 import type { BenchmarkResult } from "./types";
 import { waitForTransactionReceipt } from "viem/actions";
 import fs from "fs";
-import { createPublicClient, http } from "viem";
-import { sepolia } from "viem/chains";
 import { GelatoERC2771EOA } from "./accounts/adapters/Gelato2771EOA";
 import { EOA } from "./accounts/adapters/EOA";
+import { publicClient } from "./clients/rpc";
+import { EcdsaKernelGelato } from "./accounts/adapters/EcdsaKernelGelato";
 
-const accounts: Account[] = [new EOA(), new GelatoERC2771EOA()];
-
-const publicClient = createPublicClient({
-	chain: sepolia,
-	transport: http("https://rpc.sepolia.org"),
-});
+const accounts: Account[] = [
+	// new EOA(),
+	// new GelatoERC2771EOA(),
+	new EcdsaKernelGelato(),
+];
 
 async function main() {
 	const benchmarkResult: BenchmarkResult = {};
@@ -20,7 +19,7 @@ async function main() {
 	await Promise.all(
 		accounts.map(async (account) => {
 			console.log("Account: ", account.name);
-
+			if (account.setup) await account.setup();
 			const txHash = await account.sendERC20();
 			const receipt = await waitForTransactionReceipt(publicClient, {
 				hash: txHash,

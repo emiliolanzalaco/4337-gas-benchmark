@@ -11,4 +11,5 @@ export abstract class Account {
 	}
 
 	public abstract sendERC20(): Promise<Hash>;
+	public setup?(): Promise<void>;
 }

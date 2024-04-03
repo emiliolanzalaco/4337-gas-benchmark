@@ -1,12 +1,14 @@
 {
+	"GelatoERC2771EOA": {
+		"erc20": {
+			"hash": "0xe26d2998e21eb461c6a787fb2e983011203eebfbe2c2a4e71a545461df5aeca6",
+			"gasUsed": "109986"
+		}
+	},
 	"EOA": {
 		"erc20": {
-			"hash": "0xc78105fbab4cde6a6f7eff977d18312ff6030e84be390000dd959f1aa88be40c",
-			"gasUsed": "34460"
-		},
-		"eth": {
-			"hash": "0x3e4955bd9bc670f7ca7151bcb53d143b4c04500ed6e585c021e12b258bc8e116",
-			"gasUsed": "21000"
+			"hash": "0xb0645269012ceb9ae422978834fdad81aaf5f33778dd1877f3844c99858ec132",
+			"gasUsed": "34692"
 		}
 	}
 }

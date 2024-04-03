@@ -7,5 +7,5 @@ export type TxResult = {
 
 export type BenchmarkResult = Record<
 	string,
-	{ erc20: TxResult; eth: TxResult }
+	{ erc20: TxResult }
 >;

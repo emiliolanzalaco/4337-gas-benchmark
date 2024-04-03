@@ -1,12 +1,14 @@
-import { type Address, type Hash } from "viem";
+import { encodeFunctionData, type Address, type Hash, erc20Abi } from "viem";
+import { ERC20_ADDRESS, RECIPIENT_ADDRESS } from "../config";
 
 export abstract class Account {
-	public erc20Address: Address = "0xc55d63454161a31a675886bdA490C956a27becAA";
-	public recipient: Address = "0x84526CB0b3A0765FbD24E9CBb7d08B0FC2216B7a";
+	public erc20Address: Address = ERC20_ADDRESS;
+	public recipient: Address = RECIPIENT_ADDRESS;
 	public abstract name: string;
-	public client: any;
+
+	protected getERC20Data(): Hash {
+		return encodeFunctionData({functionName: "transfer", abi: erc20Abi, args: [this.recipient, BigInt(1e18)]});
+	}
 
 	public abstract sendERC20(): Promise<Hash>;
-	public abstract sendETH(): Promise<Hash>;
-	public abstract setup(): Promise<void>;
 }

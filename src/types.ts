@@ -5,7 +5,18 @@ export type TxResult = {
 	gasUsed: string; // have to parse to string as JSON.stringify can't handle bigint
 };
 
+export type EOAResult = {
+	erc20Transfer: TxResult;
+}
+
+export type SmartAccountResult = {
+	erc20TransferWithCreate: TxResult;
+	erc20Transfer: TxResult;
+}
+
+export type AccountResult = EOAResult | SmartAccountResult;
+
 export type BenchmarkResult = Record<
 	string,
-	{ erc20: TxResult }
+	AccountResult
 >;

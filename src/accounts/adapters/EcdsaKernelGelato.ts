@@ -1,5 +1,5 @@
 import { privateKeyToAccount } from "viem/accounts";
-import { Account } from "../Account";
+import { Account, AccountType, SmartAccount } from "../Account";
 import { PRIVATE_KEY } from "../../config";
 import { signerToEcdsaKernelSmartAccount } from "permissionless/accounts";
 import { publicClient } from "../../clients/rpc";
@@ -10,11 +10,13 @@ import {
 } from "permissionless";
 import { sepolia } from "viem/chains";
 import { zeroDevGelatoProxyBundlerTransport } from "../../clients/bundlers";
+import { mintERC20 } from "../../utils/mint";
+import { getTransferData } from "../../utils/transfer";
 export const bundlerClient = createBundlerClient({
 	transport: zeroDevGelatoProxyBundlerTransport,
 	entryPoint: ENTRYPOINT_ADDRESS_V06,
 });
-export class EcdsaKernelGelato extends Account {
+export class EcdsaKernelGelato extends SmartAccount {
 	public name = "ECDSAKernelGelato";
 	private signer = privateKeyToAccount(PRIVATE_KEY as any);
 	private account:
@@ -26,12 +28,15 @@ export class EcdsaKernelGelato extends Account {
 		if (!this.account) throw new Error("Account not setup");
 		if (!this.client) throw new Error("Client not setup");
 
-		const txHash = await this.client.sendUserOperation({
-			userOperation: {
-				callData: this.getERC20Data(),
-				maxFeePerGas: "0x0",
-				maxPriorityFeePerGas: "0x0",
-			},
+		await mintERC20(this.account.address, BigInt(1e18));
+
+		const txHash = await this.client.sendTransaction({
+      to: this.erc20Address,
+			data: getTransferData(this.recipient, BigInt(1e18)),
+      // @ts-ignore
+			maxFeePerGas: "0x0",   
+      // @ts-ignore
+			maxPriorityFeePerGas: "0x0",
 		});
 
 		return txHash;
@@ -41,6 +46,7 @@ export class EcdsaKernelGelato extends Account {
 		this.account = await signerToEcdsaKernelSmartAccount(publicClient, {
 			signer: this.signer,
 			entryPoint: ENTRYPOINT_ADDRESS_V06,
+			index: BigInt(Math.floor(Math.random() * 1e18)), // randomise account address
 		});
 		this.client = this.getClient();
 	}

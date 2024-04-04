@@ -1,5 +1,5 @@
 import { ethers } from "ethers";
-import { Account } from "../Account";
+import { EOA } from "../Account";
 import { GELATO_API_KEY, RPC_URL } from "../../config";
 import type { Hash } from "viem";
 import {
@@ -7,8 +7,9 @@ import {
 	type CallWithERC2771Request,
 } from "@gelatonetwork/relay-sdk";
 import { sepolia } from "viem/chains";
+import { getTransferData } from "../../utils/transfer";
 
-export class GelatoERC2771EOA extends Account {
+export class GelatoERC2771EOA extends EOA {
 	public name = "GelatoERC2771EOA";
 	public provider = new ethers.JsonRpcProvider(RPC_URL);
 	public signer = new ethers.Wallet(
@@ -21,7 +22,7 @@ export class GelatoERC2771EOA extends Account {
 		const request: CallWithERC2771Request = {
 			chainId: BigInt(sepolia.id),
 			target: this.erc20Address,
-			data: this.getERC20Data(),
+			data: getTransferData(this.recipient, BigInt(1e18)),
 			user: this.signer.address,
 		};
 		const relayResponse = await this.gelatoRelay.sponsoredCallERC2771(
@@ -42,7 +43,7 @@ export class GelatoERC2771EOA extends Account {
 			const interval = setInterval(async () => {
 				try {
 					const task = await this.gelatoRelay.getTaskStatus(taskId);
-          console.log(task?.transactionHash)
+					console.log(task?.transactionHash);
 					if (task?.transactionHash) {
 						clearInterval(interval);
 						resolve(task.transactionHash as Hash);
@@ -53,5 +54,4 @@ export class GelatoERC2771EOA extends Account {
 			}, 1000);
 		});
 	}
-
 }

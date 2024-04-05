@@ -1,13 +1,13 @@
 import { ethers } from "ethers";
 import { EOA } from "../Account";
 import { GELATO_API_KEY, RPC_URL } from "../../config";
-import type { Hash } from "viem";
+import type { Address, Hash } from "viem";
 import {
 	GelatoRelay,
 	type CallWithERC2771Request,
 } from "@gelatonetwork/relay-sdk";
-import { sepolia } from "viem/chains";
 import { getTransferData } from "../../utils/transfer";
+import { publicClient } from "../../clients/rpc";
 
 export class GelatoERC2771EOA extends EOA {
 	public name = "GelatoERC2771EOA";
@@ -16,11 +16,12 @@ export class GelatoERC2771EOA extends EOA {
 		process.env.PRIVATE_KEY as any,
 		this.provider
 	);
+	public address = this.signer.address as Address;
 	private gelatoRelay = new GelatoRelay();
 
 	public async sendERC20() {
 		const request: CallWithERC2771Request = {
-			chainId: BigInt(sepolia.id),
+			chainId: BigInt(publicClient.chain.id),
 			target: this.erc20Address,
 			data: getTransferData(this.recipient, BigInt(1e18)),
 			user: this.signer.address,
@@ -43,7 +44,6 @@ export class GelatoERC2771EOA extends EOA {
 			const interval = setInterval(async () => {
 				try {
 					const task = await this.gelatoRelay.getTaskStatus(taskId);
-					console.log(task?.transactionHash);
 					if (task?.transactionHash) {
 						clearInterval(interval);
 						resolve(task.transactionHash as Hash);

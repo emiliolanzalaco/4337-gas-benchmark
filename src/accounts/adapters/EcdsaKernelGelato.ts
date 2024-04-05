@@ -1,5 +1,5 @@
 import { privateKeyToAccount } from "viem/accounts";
-import { Account, AccountType, SmartAccount } from "../Account";
+import { SmartAccount } from "../Account";
 import { PRIVATE_KEY } from "../../config";
 import { signerToEcdsaKernelSmartAccount } from "permissionless/accounts";
 import { publicClient } from "../../clients/rpc";
@@ -10,7 +10,6 @@ import {
 } from "permissionless";
 import { sepolia } from "viem/chains";
 import { zeroDevGelatoProxyBundlerTransport } from "../../clients/bundlers";
-import { mintERC20 } from "../../utils/mint";
 import { getTransferData } from "../../utils/transfer";
 export const bundlerClient = createBundlerClient({
 	transport: zeroDevGelatoProxyBundlerTransport,
@@ -27,8 +26,6 @@ export class EcdsaKernelGelato extends SmartAccount {
 	public async sendERC20() {
 		if (!this.account) throw new Error("Account not setup");
 		if (!this.client) throw new Error("Client not setup");
-
-		await mintERC20(this.account.address, BigInt(1e18));
 
 		const txHash = await this.client.sendTransaction({
       to: this.erc20Address,
@@ -49,6 +46,7 @@ export class EcdsaKernelGelato extends SmartAccount {
 			index: BigInt(Math.floor(Math.random() * 1e18)), // randomise account address
 		});
 		this.client = this.getClient();
+		this.address = this.account.address;
 	}
 
 	private getClient() {

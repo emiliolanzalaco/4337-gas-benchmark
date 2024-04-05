@@ -8,6 +8,7 @@ export enum AccountType {
 export abstract class Account {
 	public erc20Address: Address = ERC20_ADDRESS;
 	public recipient: Address = RECIPIENT_ADDRESS;
+	public address: Address | undefined;
 	public abstract name: string;
 	public abstract type: AccountType;
 

@@ -1,17 +1,21 @@
 import { EOA } from "../Account";
 import { privateKeyToAccount } from "viem/accounts";
 import { PRIVATE_KEY } from "../../config";
-import { createWalletClient, http } from "viem";
-import { sepolia } from "viem/chains";
+import {
+	createWalletClient,
+	http,
+} from "viem";
 import { getTransferData } from "../../utils/transfer";
+import { publicClient } from "../../clients/rpc";
 
 export class RegularEOA extends EOA {
 	public name: string = "RegularEOA";
 	private account = privateKeyToAccount(PRIVATE_KEY as any);
+	public address = this.account.address;
 	public client = createWalletClient({
 		account: this.account,
-		chain: sepolia,
-		transport: http("https://rpc.sepolia.org"),
+		chain: publicClient.chain,
+		transport: http(publicClient.transport.url),
 	});
 
 	async sendERC20() {

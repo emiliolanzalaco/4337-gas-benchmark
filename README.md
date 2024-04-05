@@ -21,21 +21,21 @@ We use a series of tests, each representing a unique combination of ERC4337 smar
 Regular EOA sending transaction and paying for gas.
 | Operation | Gas Used |
 | -------------- | -------- |
-| ERC20 transfer | 34,460 |
+| ERC20 transfer | 34,692 [[TX](https://sepolia.etherscan.io/tx/0x8ca44e0b209eebceeed0714a5cb4474897d290f4530c3d80943f0d9eaa425369)]|
 
 ### Gelato ERC2771 EOA Relay
 
 | Operation      | Gas Used |
 | -------------- | -------- |
-| ERC20 transfer | 109,986  |
+| ERC20 transfer | 109,998  [[TX](https://sepolia.etherscan.io/tx/0xf05bb1dc256256e427751cb108d17cb1b9b83432949ea6c385771cf99e490aee)] |
 
 ### Smart Account
 
-| Signer | Smart Account | Infrastructure | CreateAndTransferERC20                                                                                           | TransferERC20                                                                                                     |
-| ------ | ------------- | -------------- | ---------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| ECDSA  | KERNEL        | GELATO         | 259,505 [[TX](https://sepolia.etherscan.io/tx/0x70277a4b06aae31b49605e9cd39b9fbf28b3c6e500f9153fb5e365b5c2dc5c7f)] | 107,473 [[TX](https://sepolia.etherscan.io/tx/0x0dce7e139ba8fc028dc7e5a7c277b57e4a1bd1bf4094bee0d10f093508697cd1)] |
-|        |               |                |                                                                                                                  |                                                                                                                   |
-|        |               |                |                                                                                                                  |                                                                                                                   |
+| Signer | Smart Account | Infrastructure | CreateAndTransferERC20                                                                                             | TransferERC20                                                                                                      |
+| ------ | ------------- | -------------- | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ |
+| ECDSA  | KERNEL        | GELATO         | 260,594 [[TX](https://sepolia.etherscan.io/tx/0x74a4f858b1d5107296d761552968619e1e1813a40ac1c5df7f9059a0ccd1b892)] | 102,685 [[TX](https://sepolia.etherscan.io/tx/0x668ff735a7d076e7b22ee66a9756657a60661ad1d1dbffc52aba3db307780076)] |
+| ECDSA  | SAFE          | PIMLICO        | 416,772 [[TX](https://sepolia.etherscan.io/tx/0x09ee20395b3195f2a96e703ce015043e2a148ee96498523a7c2d61c0765b9b29)] | 124,081 [[TX](https://sepolia.etherscan.io/tx/0x4de9d5c1b357d774668bb0a095932bbf1909416eaec26e8e70d48b0678b48323)] |
+| ECDSA  | SAFE          | GELATO         | 408,458 [[TX](https://sepolia.etherscan.io/tx/0x96c9e3a1916b9eccb3c84f6470fb0956b099310b7c64de26ec76f87c141c0fa5)] |          113,597 [[TX](https://sepolia.etherscan.io/tx/0x5e9622ceb3d66b266bd8b2ec9c07e8b925ff56c07b89aae3612c491b0ab43ffc)]                                                                                                          |
 
 ## Conclusion
 
